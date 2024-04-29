@@ -20,6 +20,7 @@ const (
 	publicDir  = "./public"
 
 	rootPath   = "/"
+	listPath   = "/list"
 	updatePath = "/update"
 	deletePath = "/delete"
 )
@@ -37,7 +38,10 @@ func main() {
 	})
 	app.Static(rootPath, publicDir)
 	app.Get(rootPath, func(c *fiber.Ctx) error {
-		return indexHandler(c, db)
+		return indexHandler(c)
+	})
+	app.Get(listPath, func(c *fiber.Ctx) error {
+		return listHandler(c, db)
 	})
 	app.Post(rootPath, func(c *fiber.Ctx) error {
 		return postHandler(c, db)

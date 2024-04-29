@@ -12,7 +12,11 @@ type todo struct {
 	Item string
 }
 
-func indexHandler(c *fiber.Ctx, db *sql.DB) error {
+func indexHandler(c *fiber.Ctx) error {
+	return c.SendString("Go to: /list")
+}
+
+func listHandler(c *fiber.Ctx, db *sql.DB) error {
 	var res string
 	var todos []string
 	rows, err := db.Query("SELECT * FROM todos")
@@ -44,14 +48,14 @@ func postHandler(c *fiber.Ctx, db *sql.DB) error {
 		}
 	}
 
-	return c.Redirect("/")
+	return c.Redirect(listPath)
 }
 
 func putHandler(c *fiber.Ctx, db *sql.DB) error {
 	oldItem := c.Query("oldItem")
 	newItem := c.Query("newItem")
 	db.Exec("UPDATE todos SET item=$1 WHERE item=$2", newItem, oldItem)
-	return c.Redirect("/")
+	return c.Redirect(listPath)
 }
 
 func deleteHandler(c *fiber.Ctx, db *sql.DB) error {
