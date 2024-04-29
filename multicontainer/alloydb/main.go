@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"net/url"
 	"os"
 	"time"
 
@@ -73,7 +72,7 @@ func connStr() string {
 		"host=%s user=%s password=%s port=%s database=%s",
 		os.Getenv("DB_HOSTNAME"),
 		os.Getenv("DB_USERNAME"),
-		url.QueryEscape(os.Getenv("DB_PASSWORD")),
+		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_PORT"),
 		os.Getenv("DB_DATABASE"),
 	)
