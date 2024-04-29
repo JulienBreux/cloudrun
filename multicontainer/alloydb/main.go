@@ -6,16 +6,17 @@ import (
 	"log"
 	"net/url"
 	"os"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
-	_ "github.com/lib/pq"
+	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
 const (
 	defaultHTTPPort = "8080"
 
-	driverName = "postgres"
+	driverName = "pgx"
 	viewsDir   = "./views"
 	viewsExt   = ".html"
 	publicDir  = "./public"
@@ -32,6 +33,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	db.SetMaxIdleConns(5)
+	db.SetMaxOpenConns(7)
+	db.SetConnMaxLifetime(1800 * time.Second)
 	if err := db.Ping(); err != nil {
 		log.Fatal(err)
 	}
@@ -65,13 +69,12 @@ func main() {
 }
 
 func connStr() string {
-	conn := fmt.Sprintf(
-		"postgresql://%s:%s@%s/%s?sslmode=%s",
+	return fmt.Sprintf(
+		"host=%s user=%s password=%s port=%s database=%s",
+		os.Getenv("DB_HOSTNAME"),
 		os.Getenv("DB_USERNAME"),
 		url.QueryEscape(os.Getenv("DB_PASSWORD")),
-		os.Getenv("DB_HOSTNAME"),
+		os.Getenv("DB_PORT"),
 		os.Getenv("DB_DATABASE"),
-		os.Getenv("DB_SSLMODE"),
 	)
-	return conn
 }
