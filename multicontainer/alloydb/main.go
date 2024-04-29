@@ -68,9 +68,9 @@ func connStr() string {
 	conn := fmt.Sprintf(
 		"postgresql://%s:%s@%s/%s", // ?sslmode=disable
 		os.Getenv("DB_USERNAME"),
-		os.Getenv("DB_PASSWORD"),
+		url.QueryEscape(os.Getenv("DB_PASSWORD")),
 		os.Getenv("DB_HOSTNAME"),
 		os.Getenv("DB_DATABASE"),
 	)
-	return url.QueryEscape(conn)
+	return conn
 }
