@@ -63,3 +63,7 @@ func deleteHandler(c *fiber.Ctx, db *sql.DB) error {
 	db.Exec("DELETE from todos WHERE item=$1", todoToDelete)
 	return c.SendString("deleted")
 }
+
+func pingHandler(c *fiber.Ctx, db *sql.DB) error {
+	return c.SendString(db.Ping().Error())
+}

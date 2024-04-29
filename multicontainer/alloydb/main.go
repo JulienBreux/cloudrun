@@ -24,6 +24,7 @@ const (
 	listPath   = "/list"
 	updatePath = "/update"
 	deletePath = "/delete"
+	pingPath   = "/ping"
 )
 
 func main() {
@@ -35,9 +36,6 @@ func main() {
 	db.SetMaxIdleConns(5)
 	db.SetMaxOpenConns(7)
 	db.SetConnMaxLifetime(1800 * time.Second)
-	if err := db.Ping(); err != nil {
-		log.Fatal(fmt.Errorf("sql.Ping: %v", err))
-	}
 
 	// Create HTTP server
 	app := fiber.New(fiber.Config{
@@ -46,6 +44,9 @@ func main() {
 	app.Static(rootPath, publicDir)
 	app.Get(rootPath, func(c *fiber.Ctx) error {
 		return indexHandler(c)
+	})
+	app.Get(pingPath, func(c *fiber.Ctx) error {
+		return pingHandler(c, db)
 	})
 	app.Get(listPath, func(c *fiber.Ctx) error {
 		return listHandler(c, db)
