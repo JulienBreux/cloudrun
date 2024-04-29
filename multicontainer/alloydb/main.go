@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/template/html/v2"
 	_ "github.com/jackc/pgx/v4/stdlib"
 )
@@ -41,6 +42,8 @@ func main() {
 	app := fiber.New(fiber.Config{
 		Views: html.New(viewsDir, viewsExt),
 	})
+
+	app.Use(recover.New())
 	app.Static(rootPath, publicDir)
 	app.Get(rootPath, func(c *fiber.Ctx) error {
 		return indexHandler(c)
