@@ -6,8 +6,6 @@ FROM golang:${GO_VERSION}-alpine AS build
 WORKDIR /${APP}
 
 COPY main.go handlers.go go.mod go.sum Makefile ./
-COPY public public
-COPY views views
 
 RUN apk --no-cache add --update make libx11-dev gcc libc-dev curl
 
@@ -20,5 +18,7 @@ LABEL maintainer="Julien BREUX <julien.breux@gmail.com>"
 USER nonroot:nonroot
 
 COPY --from=build --chown=nonroot:nonroot /${APP}/bin/app /app
+COPY public /${APP}/bin/public
+COPY views /${APP}/bin/views
 
 ENTRYPOINT ["/app"]
