@@ -5,11 +5,14 @@ FROM golang:${GO_VERSION}-alpine AS build
 
 WORKDIR /${APP}
 
-COPY go.mod go.sum Makefile ./
+COPY main.go handlers.go go.mod go.sum Makefile ./
 COPY public public
 COPY views views
 
-RUN apk --no-cache add --update make libx11-dev git gcc libc-dev curl && make build
+RUN apk --no-cache add --update make libx11-dev gcc libc-dev curl
+
+# Intentionally un packed
+RUN make build
 
 FROM gcr.io/distroless/static AS final
 

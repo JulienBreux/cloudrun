@@ -1,7 +1,5 @@
 NAME    ?= todos
 BINDIR  := $(CURDIR)/bin
-COMMIT  ?= $(shell git rev-parse HEAD)
-DATE    ?= $(shell date +%FT%T%Z)
 
 build: ## [binary] Build local binary
 	mkdir -p ./bin
