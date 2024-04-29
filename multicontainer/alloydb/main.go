@@ -28,6 +28,7 @@ const (
 
 func main() {
 	// Connect to database
+	log.Print(connStr())
 	db, err := sql.Open(driverName, connStr())
 	if err != nil {
 		log.Fatal(err)
