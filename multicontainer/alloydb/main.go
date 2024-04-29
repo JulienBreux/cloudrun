@@ -28,16 +28,15 @@ const (
 
 func main() {
 	// Connect to database
-	log.Print(connStr())
 	db, err := sql.Open(driverName, connStr())
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(fmt.Errorf("sql.Open: %v", err))
 	}
 	db.SetMaxIdleConns(5)
 	db.SetMaxOpenConns(7)
 	db.SetConnMaxLifetime(1800 * time.Second)
 	if err := db.Ping(); err != nil {
-		log.Fatal(err)
+		log.Fatal(fmt.Errorf("sql.Ping: %v", err))
 	}
 
 	// Create HTTP server
