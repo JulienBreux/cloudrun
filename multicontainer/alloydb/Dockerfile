@@ -1,11 +1,7 @@
 ARG GO_VERSION=1.22
-ARG APP=mksctl
+ARG APP=todos
 
 FROM golang:${GO_VERSION}-alpine AS build
-
-ARG VERSION=dev
-ARG DATE=n/a
-ARG COMMIT=n/a
 
 WORKDIR /${APP}
 

@@ -1,4 +1,4 @@
-NAME    ?= mksctl
+NAME    ?= todos
 BINDIR  := $(CURDIR)/bin
 COMMIT  ?= $(shell git rev-parse HEAD)
 DATE    ?= $(shell date +%FT%T%Z)
