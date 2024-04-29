@@ -70,7 +70,7 @@ func main() {
 
 func connStr() string {
 	return fmt.Sprintf(
-		"host=%s user=%s password=%s port=%s database=%s",
+		"host=%s user=%s password=%s port=%s database=%s sslmode=disable",
 		os.Getenv("DB_HOSTNAME"),
 		os.Getenv("DB_USERNAME"),
 		os.Getenv("DB_PASSWORD"),
