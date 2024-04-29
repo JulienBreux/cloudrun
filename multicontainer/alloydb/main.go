@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"net/url"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -64,11 +65,12 @@ func main() {
 }
 
 func connStr() string {
-	return fmt.Sprintf(
+	conn := fmt.Sprintf(
 		"postgresql://%s:%s@%s/%s", // ?sslmode=disable
 		os.Getenv("DB_USERNAME"),
 		os.Getenv("DB_PASSWORD"),
 		os.Getenv("DB_HOSTNAME"),
 		os.Getenv("DB_DATABASE"),
 	)
+	return url.QueryEscape(conn)
 }
