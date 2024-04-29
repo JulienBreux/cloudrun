@@ -18,7 +18,7 @@ LABEL maintainer="Julien BREUX <julien.breux@gmail.com>"
 USER nonroot:nonroot
 
 COPY --from=build --chown=nonroot:nonroot /${APP}/bin/app /app
-COPY public /${APP}/bin/public
-COPY views /${APP}/bin/views
+COPY public public
+COPY views views
 
 ENTRYPOINT ["/app"]
