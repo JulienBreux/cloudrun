@@ -65,5 +65,9 @@ func deleteHandler(c *fiber.Ctx, db *sql.DB) error {
 }
 
 func pingHandler(c *fiber.Ctx, db *sql.DB) error {
-	return c.SendString("Pong: " + db.Ping().Error())
+	err := db.Ping()
+	if err != nil {
+		c.SendString("Not Pong: " + err.Error())
+	}
+	return c.SendString("Pong: ok")
 }
