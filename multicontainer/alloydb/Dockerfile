@@ -10,9 +10,7 @@ ARG COMMIT=n/a
 WORKDIR /${APP}
 
 COPY go.mod go.sum Makefile ./
-COPY internal internal
-COPY pkg pkg
-COPY cmd cmd
+COPY public public
 COPY views views
 
 RUN apk --no-cache add --update make libx11-dev git gcc libc-dev curl && make build
